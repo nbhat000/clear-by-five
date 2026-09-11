@@ -3,184 +3,221 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clear by Five — AI workflow audits and automation</title>
+    <title>Clear by Five: AI workflow audits and automation for home-service companies</title>
     <meta
       name="description"
-      content="Clear by Five finds the manual work costing home-service companies time and margin, then builds the automations that remove it."
+      content="Clear by Five finds the manual work costing home-service companies time and margin, puts a price on it, and builds automations inside the software you already run."
     />
     <link rel="canonical" href="https://clearbyfive.com/" />
-    <meta name="theme-color" content="#0b1320" />
+    <meta name="theme-color" content="#0b5d45" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Clear by Five" />
-    <meta
-      property="og:description"
-      content="We find the work stealing your week—and build the fix."
-    />
+    <meta property="og:description" content="Put a price on the busywork. Then automate it." />
     <meta property="og:url" content="https://clearbyfive.com/" />
     <meta name="twitter:card" content="summary" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"
       rel="stylesheet"
     />
     <link
       rel="icon"
       type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1320'/%3E%3Cpath d='M18 20h28M18 32h20M18 44h28' stroke='%23f4c95d' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%230b5d45'/%3E%3Cpath d='M18 33l9 9 19-20' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='square'/%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header" data-header>
-      <div class="shell nav-wrap">
-        <a class="brand" href="#top" aria-label="Clear by Five home">
-          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span>Clear by Five</span>
+    <header class="masthead">
+      <div class="wrap masthead-row">
+        <a class="wordmark" href="#top">
+          <span class="wordmark-box" aria-hidden="true"></span>
+          Clear by Five
         </a>
-        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
-          <span></span><span></span>
-          <span class="sr-only">Open navigation</span>
-        </button>
-        <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-          <a href="#problems">What we fix</a>
-          <a href="#process">How it works</a>
-          <a href="#offer">The audit</a>
-          <a class="nav-cta" href="mailto:nikhil@clearbyfive.com?subject=AI%20Opportunity%20Scan">Request a scan</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav id="site-nav" class="site-nav" aria-label="Primary">
+          <a href="#worksheet">Worksheet</a>
+          <a href="#where">Where time goes</a>
+          <a href="#how">How it works</a>
+          <a href="#audit">The audit</a>
+          <a class="btn btn-compact" data-mail data-subject="20-minute scan request" href="mailto:nikhil@clearbyfive.com?subject=20-minute%20scan%20request">Request a scan</a>
         </nav>
       </div>
     </header>
 
     <main id="main">
-      <section id="top" class="hero shell">
-        <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span> Practical automation for home-service operators</p>
-          <h1>The work is getting done. It just shouldn’t take this much <em>chasing.</em></h1>
-          <p class="hero-lede">
-            Clear by Five finds the manual workflows costing your company time and margin—then builds reliable AI-enabled systems that remove the drag.
+      <section id="top" class="hero wrap">
+        <h1>Put a price on <span class="keep">the busywork.</span></h1>
+        <div class="hero-side">
+          <p class="lede">
+            Clear by Five finds the manual work costing home-service companies time and margin, then builds AI-assisted automations inside the software you already run. Calls get answered, quotes get followed up, and the office can be clear by five.
           </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="mailto:nikhil@clearbyfive.com?subject=AI%20Opportunity%20Scan">
-              Request a 20-minute scan <span aria-hidden="true">↗</span>
-            </a>
-            <a class="text-link" href="#process">See the process <span aria-hidden="true">↓</span></a>
-          </div>
-          <p class="hero-note">No platform pitch. We start with the workflow creating the most expensive friction.</p>
-        </div>
-
-        <div class="opportunity-map reveal" aria-label="Example workflow opportunity map">
-          <div class="map-topline">
-            <span>Example opportunity map</span>
-            <span class="live-label"><i></i> Operational review</span>
-          </div>
-          <div class="map-summary">
-            <p>Highest-leverage workflow</p>
-            <h2>Estimate follow-up</h2>
-            <span>Manual handoffs are slowing response time and hiding lost revenue.</span>
-          </div>
-          <div class="workflow-list">
-            <div class="workflow-row">
-              <span class="workflow-index">01</span>
-              <div><strong>Lead response</strong><small>Inbox → CRM → owner</small></div>
-              <span class="status review">Review</span>
-            </div>
-            <div class="workflow-row active">
-              <span class="workflow-index">02</span>
-              <div><strong>Estimate follow-up</strong><small>Quote → reminders → booking</small></div>
-              <span class="status priority">Priority</span>
-            </div>
-            <div class="workflow-row">
-              <span class="workflow-index">03</span>
-              <div><strong>Customer updates</strong><small>Dispatch → technician → customer</small></div>
-              <span class="status ready">Ready</span>
-            </div>
-          </div>
-          <div class="map-footer">
-            <span>Find the drag.</span>
-            <strong>Build the fix.</strong>
+          <div class="actions">
+            <a class="btn" data-mail data-subject="20-minute scan request" href="mailto:nikhil@clearbyfive.com?subject=20-minute%20scan%20request">Request a 20-minute scan</a>
+            <a class="text-link" href="#worksheet">Run your own numbers</a>
           </div>
         </div>
       </section>
 
-      <section class="trade-strip" aria-label="Industries served">
-        <div class="shell trade-strip-inner">
-          <p>Built for growing service businesses</p>
-          <div>
-            <span>HVAC</span><i></i><span>Plumbing</span><i></i><span>Roofing</span><i></i><span>Electrical</span>
-          </div>
+      <section id="worksheet" class="worksheet wrap" aria-labelledby="worksheet-title">
+        <div class="ws-head">
+          <h2 id="worksheet-title">What the manual version costs you each year</h2>
+          <p>Example figures. Type over them with yours. Nothing leaves this page.</p>
+        </div>
+
+        <table class="ws-table">
+          <thead>
+            <tr>
+              <th scope="col" class="ws-col-item">Item</th>
+              <th scope="col" class="ws-col-name">Workflow</th>
+              <th scope="col">Your figures</th>
+              <th scope="col" class="ws-col-amt">Per year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-line="leads">
+              <td class="ws-item">1</td>
+              <th scope="row" class="ws-name">
+                Leads that wait
+                <span>Calls and web forms nobody answers within the hour.</span>
+              </th>
+              <td class="ws-fig">
+                <input class="blank" data-key="leadsPerWeek" type="text" inputmode="decimal" value="4" aria-label="Leads per week that wait more than an hour" />
+                leads a week wait more than an hour.
+                <span class="keep"><input class="blank" data-key="leadsLostPct" data-max="100" type="text" inputmode="decimal" value="20" aria-label="Percent of those leads that book elsewhere" />%</span> of them book with someone else, at
+                <span class="keep">$<input class="blank" data-key="leadTicket" type="text" inputmode="decimal" value="400" aria-label="Average job value for those leads, in dollars" /> a job.</span>
+              </td>
+              <td class="ws-amt" data-label="Per year" data-out="leads">$16,000</td>
+            </tr>
+            <tr data-line="quotes">
+              <td class="ws-item">2</td>
+              <th scope="row" class="ws-name">
+                Estimates that go quiet
+                <span>Quotes that depend on someone remembering to follow up.</span>
+              </th>
+              <td class="ws-fig">
+                <input class="blank" data-key="quotesPerMonth" type="text" inputmode="decimal" value="15" aria-label="Estimates per month with no follow-up" />
+                estimates a month get no follow-up. If follow-up closes
+                <span class="keep"><input class="blank" data-key="quotesWonPct" data-max="100" type="text" inputmode="decimal" value="10" aria-label="Percent of those estimates follow-up would close" />%</span> of them, at
+                <span class="keep">$<input class="blank" data-key="quoteTicket" type="text" inputmode="decimal" value="1,500" aria-label="Average estimate value, in dollars" /> a job.</span>
+              </td>
+              <td class="ws-amt" data-label="Per year" data-out="quotes">$27,000</td>
+            </tr>
+            <tr data-line="hours">
+              <td class="ws-item">3</td>
+              <th scope="row" class="ws-name">
+                Office time spent chasing
+                <span>Re-entering, checking, and passing information between systems.</span>
+              </th>
+              <td class="ws-fig">
+                <input class="blank" data-key="officeHours" type="text" inputmode="decimal" value="15" aria-label="Office hours per week spent re-entering and chasing" />
+                hours a week, at
+                <span class="keep">$<input class="blank" data-key="hourlyCost" type="text" inputmode="decimal" value="28" aria-label="Loaded hourly cost of office staff, in dollars" /> an hour.</span>
+              </td>
+              <td class="ws-amt" data-label="Per year" data-out="hours">$21,000</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="ws-item"></td>
+              <th scope="row" colspan="2" class="ws-total-label">Yearly cost, by your numbers</th>
+              <td class="ws-total"><span class="ws-total-figure" data-out="total" aria-live="polite">$64,000</span></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div class="ws-foot">
+          <p class="ws-fine">Figured on 50 working weeks. Lines 1 and 2 count booked revenue, not profit.</p>
+          <p class="ws-threshold" data-threshold>That clears the $25,000 in annual value our audit guarantee is built on.</p>
+          <a class="btn btn-outline" data-mail data-subject="20-minute scan request" href="mailto:nikhil@clearbyfive.com?subject=20-minute%20scan%20request">Send these numbers with a scan request</a>
         </div>
       </section>
 
-      <section id="problems" class="section shell">
-        <div class="section-heading reveal">
-          <p class="eyebrow"><span></span> Where margin disappears</p>
-          <h2>Good people shouldn’t be the integration layer.</h2>
-          <p>If your team spends the day copying, checking, chasing, or re-entering information, the workflow is asking for a better system.</p>
-        </div>
+      <section id="where" class="where">
+        <div class="wrap">
+          <div class="split-intro">
+            <h2>Good people shouldn’t be the integration layer.</h2>
+            <p>If your team spends the day copying, checking, and chasing information between systems, the workflow is asking for a better one. You have probably heard all four of these this week.</p>
+          </div>
 
-        <div class="problem-grid">
-          <article class="problem-card reveal">
-            <span class="card-number">01</span>
-            <h3>Slow lead response</h3>
-            <p>Calls, forms, and messages land in different places while the best opportunity goes to whoever responds first.</p>
-          </article>
-          <article class="problem-card reveal">
-            <span class="card-number">02</span>
-            <h3>Dispatch handoffs</h3>
-            <p>CSRs and dispatchers spend hours moving context between phones, inboxes, technicians, and customers.</p>
-          </article>
-          <article class="problem-card reveal">
-            <span class="card-number">03</span>
-            <h3>Quotes that go quiet</h3>
-            <p>Estimates rely on someone remembering the next follow-up instead of a system that knows what should happen.</p>
-          </article>
-          <article class="problem-card reveal">
-            <span class="card-number">04</span>
-            <h3>Reporting by spreadsheet</h3>
-            <p>Leaders wait for manually assembled numbers instead of seeing what changed, where, and why.</p>
-          </article>
+          <ul class="symptoms">
+            <li>
+              <div class="symptom-copy">
+                <h3>Slow lead response</h3>
+                <p>Calls, forms, and texts land in different places, and the job goes to whoever answers first.</p>
+              </div>
+              <p class="symptom-phrase">“Did anyone call back the form that came in Saturday?”</p>
+            </li>
+            <li>
+              <div class="symptom-copy">
+                <h3>Dispatch handoffs</h3>
+                <p>CSRs and dispatchers spend hours moving context between phones, inboxes, technicians, and customers.</p>
+              </div>
+              <p class="symptom-phrase">“Can you text me the gate code again?”</p>
+            </li>
+            <li>
+              <div class="symptom-copy">
+                <h3>Quotes that go quiet</h3>
+                <p>Follow-up depends on someone remembering, instead of a system that knows what should happen next.</p>
+              </div>
+              <p class="symptom-phrase">“Did we ever hear back on the Miller estimate?”</p>
+            </li>
+            <li>
+              <div class="symptom-copy">
+                <h3>Reporting by spreadsheet</h3>
+                <p>Leaders wait on hand-assembled numbers instead of seeing what changed, where, and why.</p>
+              </div>
+              <p class="symptom-phrase">“I’ll have last month’s numbers by Thursday.”</p>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <section id="process" class="section process-section">
-        <div class="shell">
-          <div class="section-heading section-heading-light reveal">
-            <p class="eyebrow"><span></span> A practical path from friction to working system</p>
-            <h2>Start small enough to prove. Build well enough to keep.</h2>
+      <section id="how" class="how">
+        <div class="wrap">
+          <div class="split-intro">
+            <h2>One workflow at a time, starting with the most expensive.</h2>
+            <p>Each step earns the next one. Nothing gets built until the audit shows it is worth building.</p>
           </div>
 
-          <ol class="process-list">
-            <li class="reveal">
-              <div class="step-marker">01</div>
+          <div class="steps-head" aria-hidden="true">
+            <span>Step</span>
+            <span>What happens</span>
+            <span>Time</span>
+          </div>
+          <ol class="steps">
+            <li>
+              <span class="step-box">1</span>
               <div>
                 <h3>Opportunity scan</h3>
-                <p>A focused 20-minute conversation about where work stalls, repeats, or depends on one person’s memory.</p>
+                <p>A focused call about where work stalls, repeats, or depends on one person’s memory. We decide together whether anything is worth auditing.</p>
               </div>
-              <span class="step-time">20 min</span>
+              <span class="step-time">20 minutes</span>
             </li>
-            <li class="reveal">
-              <div class="step-marker">02</div>
+            <li>
+              <span class="step-box">2</span>
               <div>
                 <h3>Workflow audit</h3>
-                <p>We map the current process, quantify the cost, and identify the smallest valuable automation worth building.</p>
+                <p>We map the current process, put a cost on it, and name the smallest automation worth building.</p>
               </div>
               <span class="step-time">7 days</span>
             </li>
-            <li class="reveal">
-              <div class="step-marker">03</div>
+            <li>
+              <span class="step-box">3</span>
               <div>
                 <h3>Implementation</h3>
-                <p>We connect the systems, build the workflow, test real edge cases, document it, and train the people who use it.</p>
+                <p>We connect your systems, build the workflow, test it against real edge cases, document it, and train the people who use it.</p>
               </div>
-              <span class="step-time">30 days</span>
+              <span class="step-time">About 30 days</span>
             </li>
-            <li class="reveal">
-              <div class="step-marker">04</div>
+            <li>
+              <span class="step-box">4</span>
               <div>
                 <h3>Ongoing improvement</h3>
-                <p>We monitor what was built, improve it with real usage, and tackle the next workflow only when the first is working.</p>
+                <p>We watch what we built, tune it with real usage, and take on the next workflow only once the first one works.</p>
               </div>
               <span class="step-time">As needed</span>
             </li>
@@ -188,88 +225,109 @@
         </div>
       </section>
 
-      <section id="offer" class="section shell audit-section">
-        <div class="audit-card reveal">
+      <section id="audit" class="audit" aria-labelledby="audit-title">
+        <div class="wrap audit-grid">
           <div class="audit-copy">
-            <p class="eyebrow"><span></span> The 7-Day Workflow Audit</p>
-            <h2>A business case before a build.</h2>
-            <p>Before you fund an automation project, know exactly what should change, why it matters, and what a sensible implementation looks like.</p>
-            <ul class="check-list">
-              <li>Current-state workflow map</li>
+            <h2 id="audit-title">The 7-day workflow audit</h2>
+            <p class="audit-lede">A business case before a build. Before you fund an automation project, you will know what should change, why it matters, and what a sensible implementation looks like.</p>
+            <h3>What you get</h3>
+            <ul class="deliverables">
+              <li>A map of the workflow as it runs today</li>
               <li>Time, revenue, and risk analysis</li>
-              <li>Prioritized automation opportunities</li>
-              <li>30-day implementation plan</li>
+              <li>Automation opportunities, in priority order</li>
+              <li>A 30-day implementation plan</li>
             </ul>
           </div>
-          <div class="audit-terms">
-            <p>Founding-partner audit</p>
-            <strong>$2,500</strong>
-            <span>Fully credited toward implementation.</span>
-            <hr />
-            <p class="guarantee">If we can’t identify at least $25,000 in credible annual value, the audit fee is refunded.</p>
-            <a class="button button-dark" href="mailto:nikhil@clearbyfive.com?subject=7-Day%20Workflow%20Audit">Discuss the audit <span aria-hidden="true">↗</span></a>
+
+          <div class="terms">
+            <div class="terms-price">
+              <span>Audit fee</span>
+              <strong>$2,500</strong>
+              <small>Founding-partner price</small>
+            </div>
+            <dl class="terms-list">
+              <div>
+                <dt>If you go on to implementation</dt>
+                <dd>Credited in full</dd>
+              </div>
+              <div>
+                <dt>If we can’t find at least $25,000 in credible annual value</dt>
+                <dd>Fee refunded</dd>
+              </div>
+            </dl>
+            <a class="btn btn-block" data-mail data-subject="7-day workflow audit" href="mailto:nikhil@clearbyfive.com?subject=7-day%20workflow%20audit">Ask about the audit</a>
           </div>
         </div>
       </section>
 
-      <section class="section systems-section">
-        <div class="shell systems-layout">
-          <div class="section-heading reveal">
-            <p class="eyebrow"><span></span> Built around what you already use</p>
-            <h2>No rip-and-replace mandate.</h2>
-            <p>We assess and connect the systems already carrying the business. The goal is less operational drag—not another dashboard nobody asked for.</p>
-          </div>
-          <div class="systems-grid reveal" aria-label="Common systems we assess and connect">
-            <span>ServiceTitan</span>
-            <span>Housecall Pro</span>
-            <span>Jobber</span>
-            <span>QuickBooks</span>
-            <span>Google Workspace</span>
-            <span>HubSpot</span>
-            <span>Phone systems</span>
-            <span>Existing spreadsheets</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section shell founder-section">
-        <div class="founder-card reveal">
-          <div class="founder-monogram" aria-hidden="true">NB</div>
+      <section class="systems">
+        <div class="wrap systems-grid">
           <div>
-            <p class="eyebrow"><span></span> Founder-led from diagnosis through delivery</p>
-            <h2>You work directly with the person building the system.</h2>
-            <p>Clear by Five is led by Nikhil Bhat. Every engagement starts with the operating reality—not a predetermined tool—and stays close to the people who will use what gets built.</p>
+            <h2>Works with what you already run.</h2>
+            <p>No rip-and-replace. We connect the systems already carrying the business, so your team keeps the tools they know and loses the copying between them.</p>
+          </div>
+          <fieldset class="checklist">
+            <legend>Check what you use and it goes into your email.</legend>
+            <div class="checklist-grid">
+              <label><input type="checkbox" value="ServiceTitan" /> ServiceTitan</label>
+              <label><input type="checkbox" value="Housecall Pro" /> Housecall Pro</label>
+              <label><input type="checkbox" value="Jobber" /> Jobber</label>
+              <label><input type="checkbox" value="QuickBooks" /> QuickBooks</label>
+              <label><input type="checkbox" value="Google Workspace" /> Google Workspace</label>
+              <label><input type="checkbox" value="HubSpot" /> HubSpot</label>
+              <label><input type="checkbox" value="A phone system" /> Your phone system</label>
+              <label><input type="checkbox" value="Spreadsheets" /> Spreadsheets</label>
+            </div>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="founder">
+        <div class="wrap founder-grid">
+          <picture class="founder-photo">
+            <source type="image/webp" srcset="images/nikhil-bhat-480.webp 480w, images/nikhil-bhat-960.webp 960w" sizes="(max-width: 760px) 280px, 400px" />
+            <img src="images/nikhil-bhat-480.jpg" srcset="images/nikhil-bhat-480.jpg 480w, images/nikhil-bhat-960.jpg 960w" sizes="(max-width: 760px) 280px, 400px" width="480" height="600" loading="lazy" decoding="async" alt="Nikhil Bhat, founder of Clear by Five" />
+          </picture>
+          <div class="founder-copy">
+            <div>
+              <h2>You work directly with the person building the system.</h2>
+              <p>Clear by Five is founder-led from diagnosis through delivery. Every engagement starts with how your shop actually runs, not a tool picked in advance, and stays close to the people who will use what gets built.</p>
+            </div>
+            <div class="signature">
+              <span class="signature-label">Prepared by</span>
+              <p class="signature-name">Nikhil Bhat</p>
+              <p class="signature-role">Founder, Clear by Five <span aria-hidden="true">/</span> <a href="mailto:nikhil@clearbyfive.com">nikhil@clearbyfive.com</a></p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="closing-section">
-        <div class="shell closing-inner reveal">
-          <p class="eyebrow"><span></span> Start with one expensive workflow</p>
-          <h2>What keeps getting chased inside your business?</h2>
-          <p>Bring the messy version. In 20 minutes, we’ll decide whether there is a useful automation opportunity worth investigating.</p>
-          <a class="button button-primary" href="mailto:nikhil@clearbyfive.com?subject=AI%20Opportunity%20Scan">Request the scan <span aria-hidden="true">↗</span></a>
-          <a class="closing-email" href="mailto:nikhil@clearbyfive.com">nikhil@clearbyfive.com</a>
+      <section class="close">
+        <div class="wrap close-inner">
+          <h2>What keeps getting chased in your business?</h2>
+          <p>Bring the messy version. In 20 minutes, we will tell you whether there is an automation worth investigating.</p>
+          <div class="actions">
+            <a class="btn btn-canary" data-mail data-subject="20-minute scan request" href="mailto:nikhil@clearbyfive.com?subject=20-minute%20scan%20request">Request the 20-minute scan</a>
+            <a class="close-email" href="mailto:nikhil@clearbyfive.com">nikhil@clearbyfive.com</a>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="shell footer-main">
-        <a class="brand brand-footer" href="#top">
-          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span>Clear by Five</span>
-        </a>
-        <p>AI workflow audits and automation for home-service companies.</p>
-        <div class="footer-meta">
-          <span>© <span data-year></span> Clear by Five</span>
-          <a href="#privacy">Privacy</a>
-          <a href="mailto:nikhil@clearbyfive.com">Contact</a>
+    <footer class="footer">
+      <div class="wrap footer-grid">
+        <div>
+          <a class="wordmark" href="#top">
+            <span class="wordmark-box" aria-hidden="true"></span>
+            Clear by Five
+          </a>
+          <p>AI workflow audits and automation for home-service companies.</p>
         </div>
-      </div>
-      <div id="privacy" class="shell privacy-note">
-        <strong>Privacy</strong>
-        <p>Clear by Five collects only the information you choose to send by email and uses it to respond to your inquiry. We do not sell personal information.</p>
+        <div id="privacy">
+          <h2 class="footer-heading">Privacy</h2>
+          <p>Clear by Five collects only what you choose to send by email and uses it to reply to you. The worksheet runs in your browser and sends nothing. We do not sell personal information.</p>
+        </div>
+        <p class="footer-meta">© <span data-year>2026</span> Clear by Five<br /><a href="mailto:nikhil@clearbyfive.com">Contact</a></p>
       </div>
     </footer>
 
