@@ -1,4 +1,30 @@
-const EMAIL = "nikhil@clearbyfive.com";
+/* ------------------------------------------------------------------
+   SETUP: paste your links here. The site works before you do;
+   the form just falls back to email.
+   ------------------------------------------------------------------ */
+const CONFIG = {
+  email: "nikhil@clearbyfive.com",
+
+  // Google Calendar booking page link (Calendar > Create > Appointment schedule > Share).
+  // Example: "https://calendar.app.google/AbCdEf123"
+  bookingUrl: "",
+
+  // Google Form that collects scan requests. Leave action empty to fall back to email.
+  googleForm: {
+    // Your form's link with "viewform" swapped for "formResponse".
+    // Example: "https://docs.google.com/forms/d/e/1FAIpQL.../formResponse"
+    action: "",
+    // The entry IDs from the form's pre-filled link.
+    fields: {
+      name: "entry.0000000001",
+      email: "entry.0000000002",
+      company: "entry.0000000003",
+      phone: "entry.0000000004",
+      details: "entry.0000000005",
+    },
+  },
+};
+
 const WEEKS = 50;
 const THRESHOLD = 25000;
 
@@ -9,51 +35,61 @@ const money = new Intl.NumberFormat("en-US", {
 });
 const plain = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 
-/* Year */
+/* Header, menu, year */
+
+const header = document.querySelector("[data-header]");
+const menuButton = document.querySelector(".menu-button");
+const nav = document.querySelector(".site-nav");
 const year = document.querySelector("[data-year]");
+
 if (year) year.textContent = String(new Date().getFullYear());
 
-/* Mobile menu */
-const toggle = document.querySelector(".menu-toggle");
-const nav = document.getElementById("site-nav");
+const updateHeader = () => header?.classList.toggle("scrolled", window.scrollY > 12);
+updateHeader();
+window.addEventListener("scroll", updateHeader, { passive: true });
 
 const setMenu = (open) => {
-  if (!toggle || !nav) return;
-  toggle.setAttribute("aria-expanded", String(open));
-  toggle.textContent = open ? "Close" : "Menu";
-  nav.classList.toggle("is-open", open);
+  menuButton?.setAttribute("aria-expanded", String(open));
+  nav?.classList.toggle("open", open);
 };
 
-toggle?.addEventListener("click", () => {
-  setMenu(toggle.getAttribute("aria-expanded") !== "true");
+menuButton?.addEventListener("click", () => {
+  setMenu(menuButton.getAttribute("aria-expanded") !== "true");
 });
 
 nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
+  if (event.key === "Escape" && menuButton?.getAttribute("aria-expanded") === "true") {
     setMenu(false);
-    toggle.focus();
+    menuButton.focus();
   }
 });
 
-/* Worksheet */
+/* Booking buttons go straight to the calendar once a booking page is set */
+
+if (CONFIG.bookingUrl) {
+  document.querySelectorAll("[data-cta]").forEach((link) => {
+    link.href = CONFIG.bookingUrl;
+    link.target = "_blank";
+    link.rel = "noopener";
+  });
+}
+
+/* Cost worksheet */
+
 const blanks = [...document.querySelectorAll(".blank")];
 const outputs = Object.fromEntries(
   [...document.querySelectorAll("[data-out]")].map((el) => [el.dataset.out, el])
 );
 const threshold = document.querySelector("[data-threshold]");
-const systems = [...document.querySelectorAll(".checklist input")];
-const mailLinks = [...document.querySelectorAll("[data-mail]")];
+const systems = [...document.querySelectorAll(".systems-grid input")];
 
 const read = (input) => {
-  const cleaned = input.value.replace(/[^0-9.]/g, "");
-  let value = Number.parseFloat(cleaned);
-  const valid = cleaned === "" || Number.isFinite(value);
+  let value = Number.parseFloat(input.value.replace(/[^0-9.]/g, ""));
   if (!Number.isFinite(value)) value = 0;
   const max = Number(input.dataset.max);
   if (max && value > max) value = max;
-  input.setAttribute("aria-invalid", String(!valid));
   return value;
 };
 
@@ -70,45 +106,17 @@ const compute = (f) => {
   return { leads, quotes, hours, total: leads + quotes + hours };
 };
 
+let worksheetTouched = false;
+let rendered = false;
+
 const flash = (el) => {
   el.classList.remove("is-updated");
   void el.offsetWidth;
   el.classList.add("is-updated");
 };
 
-const buildBody = (f, totals) => {
-  const lines = [
-    "Hi Nikhil,",
-    "",
-    "I'd like to set up a 20-minute scan.",
-    "",
-    "Company:",
-    "Best number to reach me:",
-    "",
-    "My worksheet numbers:",
-    `- Leads that wait: ${plain.format(f.leadsPerWeek)} a week, ${plain.format(f.leadsLostPct)}% book elsewhere, ${money.format(f.leadTicket)} a job = ${money.format(totals.leads)} a year`,
-    `- Estimates that go quiet: ${plain.format(f.quotesPerMonth)} a month, ${plain.format(f.quotesWonPct)}% closable, ${money.format(f.quoteTicket)} a job = ${money.format(totals.quotes)} a year`,
-    `- Office time spent chasing: ${plain.format(f.officeHours)} hours a week at ${money.format(f.hourlyCost)} an hour = ${money.format(totals.hours)} a year`,
-    `Total: ${money.format(totals.total)} a year`,
-  ];
-  const checked = systems.filter((box) => box.checked).map((box) => box.value);
-  if (checked.length) lines.push("", `Systems we use: ${checked.join(", ")}`);
-  return lines.join("\r\n");
-};
-
-const updateMail = (f, totals) => {
-  const body = buildBody(f, totals);
-  mailLinks.forEach((link) => {
-    const subject = link.dataset.subject || "20-minute scan request";
-    link.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
-};
-
-let previous = null;
-
 const render = ({ animate = true } = {}) => {
-  const f = figures();
-  const totals = compute(f);
+  const totals = compute(figures());
 
   Object.entries(totals).forEach(([key, value]) => {
     const el = outputs[key];
@@ -116,36 +124,187 @@ const render = ({ animate = true } = {}) => {
     const text = money.format(value);
     if (el.textContent !== text) {
       el.textContent = text;
-      if (animate && previous) flash(el);
+      if (animate && rendered) flash(el);
     }
   });
 
   if (threshold) {
     threshold.textContent =
       totals.total >= THRESHOLD
-        ? "That clears the $25,000 in annual value our audit guarantee is built on."
-        : "Under $25,000 by these numbers. A scan can check what this worksheet doesn’t count.";
+        ? "That’s above the $25,000 our audit guarantee is built on."
+        : "Under $25,000 by these numbers. A scan can check what this doesn’t count.";
   }
 
-  updateMail(f, totals);
-  previous = totals;
+  rendered = true;
 };
 
 blanks.forEach((input) => {
   sizeBlank(input);
   input.addEventListener("input", () => {
+    worksheetTouched = true;
     sizeBlank(input);
     render();
   });
   input.addEventListener("focus", () => input.select());
   input.addEventListener("blur", () => {
-    const value = read(input);
-    input.value = plain.format(value);
+    input.value = plain.format(read(input));
     sizeBlank(input);
     render({ animate: false });
   });
 });
 
-systems.forEach((box) => box.addEventListener("change", () => render({ animate: false })));
-
 render({ animate: false });
+
+/* Details that ride along with a scan request */
+
+const buildDetails = () => {
+  const f = figures();
+  const t = compute(f);
+  const lines = [
+    worksheetTouched ? "Worksheet (their numbers):" : "Worksheet (example numbers, not edited):",
+    `- Leads that wait: ${plain.format(f.leadsPerWeek)}/week, ${plain.format(f.leadsLostPct)}% lost, ${money.format(f.leadTicket)}/job = ${money.format(t.leads)}/yr`,
+    `- Quotes that go quiet: ${plain.format(f.quotesPerMonth)}/month, ${plain.format(f.quotesWonPct)}% closable, ${money.format(f.quoteTicket)}/job = ${money.format(t.quotes)}/yr`,
+    `- Office time: ${plain.format(f.officeHours)} hrs/week at ${money.format(f.hourlyCost)}/hr = ${money.format(t.hours)}/yr`,
+    `Total: ${money.format(t.total)}/yr`,
+  ];
+  const checked = systems.filter((box) => box.checked).map((box) => box.value);
+  lines.push("", `Software: ${checked.length ? checked.join(", ") : "not selected"}`);
+  return lines.join("\n");
+};
+
+/* Scan request form */
+
+const form = document.querySelector("[data-book-form]");
+const done = document.querySelector("[data-book-done]");
+const doneMessage = document.querySelector("[data-done-message]");
+const bookingLink = document.querySelector("[data-booking-link]");
+const errorBox = document.querySelector("[data-form-error]");
+const submitButton = document.querySelector("[data-submit]");
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const validate = () => {
+  const problems = [];
+  const { name, email, company } = form.elements;
+
+  [name, email, company].forEach((input) => input.setAttribute("aria-invalid", "false"));
+
+  if (!name.value.trim()) {
+    problems.push("your name");
+    name.setAttribute("aria-invalid", "true");
+  }
+  if (!emailPattern.test(email.value.trim())) {
+    problems.push("a valid email");
+    email.setAttribute("aria-invalid", "true");
+  }
+  if (!company.value.trim()) {
+    problems.push("your company");
+    company.setAttribute("aria-invalid", "true");
+  }
+  return problems;
+};
+
+const showDone = (message) => {
+  form.hidden = true;
+  done.hidden = false;
+  if (message) doneMessage.textContent = message;
+  if (CONFIG.bookingUrl && bookingLink) {
+    doneMessage.textContent = "Grab a time on the calendar now so we don’t have to trade emails.";
+    bookingLink.href = CONFIG.bookingUrl;
+    bookingLink.hidden = false;
+  }
+  done.focus();
+};
+
+form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  errorBox.hidden = true;
+
+  const problems = validate();
+  if (problems.length) {
+    errorBox.textContent = `Please add ${problems.join(", ")}.`;
+    errorBox.hidden = false;
+    form.querySelector('[aria-invalid="true"]')?.focus();
+    return;
+  }
+
+  // Bots fill the hidden field; people never see it.
+  if (form.elements.website.value) {
+    showDone();
+    return;
+  }
+
+  const values = {
+    name: form.elements.name.value.trim(),
+    email: form.elements.email.value.trim(),
+    company: form.elements.company.value.trim(),
+    phone: form.elements.phone.value.trim(),
+    details: buildDetails(),
+  };
+
+  if (!CONFIG.googleForm.action) {
+    const body = [
+      "Hi Nikhil,",
+      "",
+      "I'd like to book a free 20-minute scan.",
+      "",
+      `Name: ${values.name}`,
+      `Company: ${values.company}`,
+      `Email: ${values.email}`,
+      `Phone: ${values.phone || "not given"}`,
+      "",
+      values.details,
+    ].join("\r\n");
+    window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(
+      `Scan request: ${values.company}`
+    )}&body=${encodeURIComponent(body)}`;
+    showDone("Your email app should open with everything filled in. Hit send and Nikhil will reply to set a time.");
+    return;
+  }
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Sending…";
+
+  const payload = new URLSearchParams();
+  Object.entries(CONFIG.googleForm.fields).forEach(([key, entry]) => {
+    payload.append(entry, values[key] || "");
+  });
+
+  try {
+    await fetch(CONFIG.googleForm.action, { method: "POST", mode: "no-cors", body: payload });
+    showDone();
+  } catch (error) {
+    submitButton.disabled = false;
+    submitButton.textContent = "Request my free scan";
+    errorBox.textContent = `That didn’t go through. Check your connection and try again, or email ${CONFIG.email}.`;
+    errorBox.hidden = false;
+  }
+});
+
+/* Mobile sticky button: appears after the hero, hides at the booking form */
+
+const mobileCta = document.querySelector("[data-mobile-cta]");
+const hero = document.querySelector(".hero");
+const bookSection = document.getElementById("book");
+
+if (mobileCta && hero && bookSection && "IntersectionObserver" in window) {
+  let pastHero = false;
+  let atBooking = false;
+
+  const sync = () => {
+    const show = pastHero && !atBooking;
+    mobileCta.classList.toggle("is-visible", show);
+    mobileCta.setAttribute("aria-hidden", String(!show));
+    mobileCta.querySelector("a")?.setAttribute("tabindex", show ? "0" : "-1");
+  };
+
+  new IntersectionObserver(([entry]) => {
+    pastHero = !entry.isIntersecting;
+    sync();
+  }).observe(hero);
+
+  new IntersectionObserver(([entry]) => {
+    atBooking = entry.isIntersecting;
+    sync();
+  }).observe(bookSection);
+}
