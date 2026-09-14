@@ -11,7 +11,7 @@ const CONFIG = {
   bookingUrl: "https://calendar.app.google/S2CGWY6gTtXmTJig7",
 
   // Add the Meta Dataset/Pixel ID before paid traffic. The loader safely no-ops while blank.
-  metaPixelId: "",
+  metaPixelId: "1127278762973934",
 
   // Live Google Form used as the no-backend lead store for this GitHub Pages site.
   googleForm: {
