@@ -18,17 +18,17 @@ const CONFIG = {
     action: "https://docs.google.com/forms/d/e/1FAIpQLSfsUPHAPT_06n6-GDpMTpxU1anWwAY6BWjRJbsuCazyOt3WSQ/formResponse",
     editUrl: "https://docs.google.com/forms/d/150r1cJQL4boqUpVmcaaWFOvfdaUkHD-0iV72vY_xIgw/edit",
     fields: {
-      name: "entry.10000001",
-      email: "entry.10000002",
-      phone: "entry.10000003",
-      company: "entry.10000004",
-      companyWebsite: "entry.10000005",
-      revenue: "entry.10000006",
-      role: "entry.10000007",
-      leak: "entry.10000008",
-      systems: "entry.10000009",
-      timing: "entry.10000010",
-      details: "entry.10000011",
+      name: "entry.268435457",
+      email: "entry.268435458",
+      phone: "entry.268435459",
+      company: "entry.268435460",
+      companyWebsite: "entry.268435461",
+      revenue: "entry.268435462",
+      role: "entry.268435463",
+      leak: "entry.268435464",
+      systems: "entry.268435465",
+      timing: "entry.268435472",
+      details: "entry.268435473",
     },
   },
 };
@@ -336,6 +336,8 @@ form?.addEventListener("submit", async (event) => {
     if (Array.isArray(value)) value.forEach((item) => payload.append(entry, item));
     else payload.append(entry, value || "");
   });
+  payload.append("fvv", "1");
+  payload.append("pageHistory", "0");
 
   try {
     await fetch(CONFIG.googleForm.action, { method: "POST", mode: "no-cors", body: payload });
