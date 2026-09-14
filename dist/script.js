@@ -3,7 +3,8 @@
    the form just falls back to email.
    ------------------------------------------------------------------ */
 const CONFIG = {
-  email: "nikhil@clearbyfive.com",
+  email: "nqb5152@gmail.com",
+  displayEmail: "nikhil@clearbyfive.com",
 
   // Google Calendar booking page link (Calendar > Create > Appointment schedule > Share).
   // Example: "https://calendar.app.google/AbCdEf123"
@@ -276,7 +277,7 @@ form?.addEventListener("submit", async (event) => {
   } catch (error) {
     submitButton.disabled = false;
     submitButton.textContent = "Request my free scan";
-    errorBox.textContent = `That didn’t go through. Check your connection and try again, or email ${CONFIG.email}.`;
+    errorBox.textContent = `That didn’t go through. Check your connection and try again, or email ${CONFIG.displayEmail}.`;
     errorBox.hidden = false;
   }
 });
