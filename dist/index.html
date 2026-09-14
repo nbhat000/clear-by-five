@@ -26,7 +26,7 @@
       type="image/svg+xml"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1320'/%3E%3Cpath d='M18 20h28M18 32h20M18 44h28' stroke='%23f4c95d' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260914-leadflow" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -365,10 +365,10 @@
           <div class="book-card">
             <form class="book-form" data-book-form novalidate>
               <h3>Book my free scan</h3>
-              <p class="book-intro">Takes 30 seconds. Your worksheet numbers and software picks come along automatically.</p>
+              <p class="book-intro">Takes about a minute. Your worksheet numbers and software picks come along automatically.</p>
 
               <div class="field">
-                <label for="f-name">Name</label>
+                <label for="f-name">Full name</label>
                 <input id="f-name" name="name" type="text" autocomplete="name" required />
               </div>
               <div class="field">
@@ -376,20 +376,84 @@
                 <input id="f-email" name="email" type="email" autocomplete="email" required />
               </div>
               <div class="field">
+                <label for="f-phone">Mobile phone</label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel" required />
+              </div>
+              <div class="field">
                 <label for="f-company">Company</label>
                 <input id="f-company" name="company" type="text" autocomplete="organization" required />
               </div>
               <div class="field">
-                <label for="f-phone">Phone <span>(optional)</span></label>
-                <input id="f-phone" name="phone" type="tel" autocomplete="tel" />
+                <label for="f-company-website">Company website</label>
+                <input id="f-company-website" name="companyWebsite" type="url" inputmode="url" placeholder="https://" autocomplete="url" required />
+              </div>
+              <div class="field">
+                <label for="f-revenue">Approximate annual revenue</label>
+                <select id="f-revenue" name="revenue" required>
+                  <option value="" selected disabled>Select a range</option>
+                  <option>Under $3M</option>
+                  <option>$3M-$5M</option>
+                  <option>$5M-$10M</option>
+                  <option>$10M-$25M</option>
+                  <option>$25M-$50M</option>
+                  <option>$50M+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-role">Your role</label>
+                <select id="f-role" name="role" required>
+                  <option value="" selected disabled>Select your role</option>
+                  <option>Owner / Founder</option>
+                  <option>President / CEO</option>
+                  <option>COO / Operations leader</option>
+                  <option>Sales / Marketing leader</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-leak">Largest operational leak</label>
+                <select id="f-leak" name="leak" required>
+                  <option value="" selected disabled>Select the closest match</option>
+                  <option>Slow lead response</option>
+                  <option>Estimates go quiet</option>
+                  <option>Dispatch / customer handoffs</option>
+                  <option>Reporting / admin</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-system">Main business system</label>
+                <select id="f-system" name="primarySystem" required>
+                  <option value="" selected disabled>Select the closest match</option>
+                  <option>ServiceTitan</option>
+                  <option>Housecall Pro</option>
+                  <option>Jobber</option>
+                  <option>HubSpot</option>
+                  <option>QuickBooks</option>
+                  <option>Google Workspace</option>
+                  <option>Phone system</option>
+                  <option>Spreadsheets</option>
+                  <option>Other / mixed</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-timing">If the ROI is clear, when would you act?</label>
+                <select id="f-timing" name="timing" required>
+                  <option value="" selected disabled>Select a timeframe</option>
+                  <option>Within 30 days</option>
+                  <option>30-90 days</option>
+                  <option>Later this year</option>
+                  <option>Research only</option>
+                </select>
               </div>
               <div class="field-trap" aria-hidden="true">
-                <label for="f-website">Website</label>
-                <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+                <label for="f-fax">Fax</label>
+                <input id="f-fax" name="fax" type="text" tabindex="-1" autocomplete="off" />
               </div>
 
               <p class="form-error" data-form-error role="alert" hidden></p>
               <button class="button button-primary button-block" type="submit" data-submit>Request my free scan</button>
+              <p class="consent-note">By submitting, you agree that Clear by Five may contact you by email, call, or text about this request. Message and data rates may apply. Reply STOP to opt out of texts.</p>
               <p class="book-alt">Prefer email? <a href="mailto:nqb5152@gmail.com">nikhil@clearbyfive.com</a></p>
             </form>
 
@@ -422,10 +486,10 @@
       </div>
       <div id="privacy" class="shell privacy-note">
         <h2>Privacy</h2>
-        <p>What you send through the form or by email is used only to reply to you. The cost worksheet runs in your browser, and its numbers are only sent if you submit the form. We do not sell personal information.</p>
+        <p>What you send through the form or by email is used only to evaluate and respond to your request, schedule the scan, and provide related follow-up. The cost worksheet runs in your browser, and its numbers are only sent if you submit the form. We do not sell personal information.</p>
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20260914-leadflow"></script>
   </body>
 </html>

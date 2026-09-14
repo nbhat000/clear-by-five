@@ -6,24 +6,60 @@ const CONFIG = {
   email: "nqb5152@gmail.com",
   displayEmail: "nikhil@clearbyfive.com",
 
-  // Google Calendar booking page link (Calendar > Create > Appointment schedule > Share).
-  // Example: "https://calendar.app.google/AbCdEf123"
+  // Add a Google Calendar Appointment Schedule or Calendly URL here when ready.
+  // Until then, every CTA scrolls to the qualified request form below.
   bookingUrl: "",
 
-  // Google Form that collects scan requests. Leave action empty to fall back to email.
+  // Add the Meta Dataset/Pixel ID before paid traffic. The loader safely no-ops while blank.
+  metaPixelId: "",
+
+  // Live Google Form used as the no-backend lead store for this GitHub Pages site.
   googleForm: {
-    // Your form's link with "viewform" swapped for "formResponse".
-    // Example: "https://docs.google.com/forms/d/e/1FAIpQL.../formResponse"
-    action: "",
-    // The entry IDs from the form's pre-filled link.
+    action: "https://docs.google.com/forms/d/e/1FAIpQLSfsUPHAPT_06n6-GDpMTpxU1anWwAY6BWjRJbsuCazyOt3WSQ/formResponse",
+    editUrl: "https://docs.google.com/forms/d/150r1cJQL4boqUpVmcaaWFOvfdaUkHD-0iV72vY_xIgw/edit",
     fields: {
-      name: "entry.0000000001",
-      email: "entry.0000000002",
-      company: "entry.0000000003",
-      phone: "entry.0000000004",
-      details: "entry.0000000005",
+      name: "entry.10000001",
+      email: "entry.10000002",
+      phone: "entry.10000003",
+      company: "entry.10000004",
+      companyWebsite: "entry.10000005",
+      revenue: "entry.10000006",
+      role: "entry.10000007",
+      leak: "entry.10000008",
+      systems: "entry.10000009",
+      timing: "entry.10000010",
+      details: "entry.10000011",
     },
   },
+};
+
+
+
+/* Attribution and conversion tracking */
+
+const attributionKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"];
+const currentParams = new URLSearchParams(window.location.search);
+const attribution = Object.fromEntries(
+  attributionKeys
+    .map((key) => [key, currentParams.get(key) || sessionStorage.getItem(`cbf_${key}`) || ""])
+    .filter(([, value]) => value)
+);
+Object.entries(attribution).forEach(([key, value]) => sessionStorage.setItem(`cbf_${key}`, value));
+
+if (CONFIG.metaPixelId) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init", CONFIG.metaPixelId);
+  fbq("track", "PageView");
+}
+
+const track = (eventName, parameters = {}) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: eventName, ...parameters });
+  if (typeof window.fbq === "function") window.fbq("track", eventName, parameters);
 };
 
 const WEEKS = 50;
@@ -69,13 +105,14 @@ document.addEventListener("keydown", (event) => {
 
 /* Booking buttons go straight to the calendar once a booking page is set */
 
-if (CONFIG.bookingUrl) {
-  document.querySelectorAll("[data-cta]").forEach((link) => {
+document.querySelectorAll("[data-cta]").forEach((link) => {
+  link.addEventListener("click", () => track("Contact", { content_name: "AI Opportunity Scan" }));
+  if (CONFIG.bookingUrl) {
     link.href = CONFIG.bookingUrl;
     link.target = "_blank";
     link.rel = "noopener";
-  });
-}
+  }
+});
 
 /* Cost worksheet */
 
@@ -169,7 +206,10 @@ const buildDetails = () => {
     `Total: ${money.format(t.total)}/yr`,
   ];
   const checked = systems.filter((box) => box.checked).map((box) => box.value);
-  lines.push("", `Software: ${checked.length ? checked.join(", ") : "not selected"}`);
+  lines.push("", `Software selected in worksheet: ${checked.length ? checked.join(", ") : "not selected"}`);
+  const attributionLine = Object.entries(attribution).map(([key, value]) => `${key}=${value}`).join(", ");
+  lines.push(`Attribution: ${attributionLine || "direct / unavailable"}`);
+  lines.push(`Landing page: ${window.location.href}`);
   return lines.join("\n");
 };
 
@@ -186,22 +226,44 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const validate = () => {
   const problems = [];
-  const { name, email, company } = form.elements;
+  const requiredFields = [
+    ["name", "your name"],
+    ["email", "a valid work email"],
+    ["phone", "your mobile phone"],
+    ["company", "your company"],
+    ["companyWebsite", "your company website"],
+    ["revenue", "annual revenue"],
+    ["role", "your role"],
+    ["leak", "the largest operational leak"],
+    ["primarySystem", "your main business system"],
+    ["timing", "a timeframe"],
+  ];
 
-  [name, email, company].forEach((input) => input.setAttribute("aria-invalid", "false"));
+  requiredFields.forEach(([field]) => form.elements[field].setAttribute("aria-invalid", "false"));
 
-  if (!name.value.trim()) {
-    problems.push("your name");
-    name.setAttribute("aria-invalid", "true");
+  requiredFields.forEach(([field, label]) => {
+    const input = form.elements[field];
+    if (!input.value.trim()) {
+      problems.push(label);
+      input.setAttribute("aria-invalid", "true");
+    }
+  });
+
+  if (form.elements.email.value && !emailPattern.test(form.elements.email.value.trim())) {
+    if (!problems.includes("a valid work email")) problems.push("a valid work email");
+    form.elements.email.setAttribute("aria-invalid", "true");
   }
-  if (!emailPattern.test(email.value.trim())) {
-    problems.push("a valid email");
-    email.setAttribute("aria-invalid", "true");
+
+  try {
+    if (form.elements.companyWebsite.value && !/^https?:\/\//i.test(form.elements.companyWebsite.value)) {
+      form.elements.companyWebsite.value = `https://${form.elements.companyWebsite.value}`;
+    }
+    new URL(form.elements.companyWebsite.value);
+  } catch {
+    if (!problems.includes("your company website")) problems.push("a valid company website");
+    form.elements.companyWebsite.setAttribute("aria-invalid", "true");
   }
-  if (!company.value.trim()) {
-    problems.push("your company");
-    company.setAttribute("aria-invalid", "true");
-  }
+
   return problems;
 };
 
@@ -230,16 +292,27 @@ form?.addEventListener("submit", async (event) => {
   }
 
   // Bots fill the hidden field; people never see it.
-  if (form.elements.website.value) {
+  if (form.elements.fax.value) {
     showDone();
     return;
   }
 
+  const pickedSystems = [...new Set([
+    form.elements.primarySystem.value,
+    ...systems.filter((box) => box.checked).map((box) => box.value),
+  ].filter(Boolean))];
+
   const values = {
     name: form.elements.name.value.trim(),
     email: form.elements.email.value.trim(),
-    company: form.elements.company.value.trim(),
     phone: form.elements.phone.value.trim(),
+    company: form.elements.company.value.trim(),
+    companyWebsite: form.elements.companyWebsite.value.trim(),
+    revenue: form.elements.revenue.value,
+    role: form.elements.role.value,
+    leak: form.elements.leak.value,
+    systems: pickedSystems,
+    timing: form.elements.timing.value,
     details: buildDetails(),
   };
 
@@ -251,8 +324,14 @@ form?.addEventListener("submit", async (event) => {
       "",
       `Name: ${values.name}`,
       `Company: ${values.company}`,
+      `Website: ${values.companyWebsite}`,
       `Email: ${values.email}`,
-      `Phone: ${values.phone || "not given"}`,
+      `Phone: ${values.phone}`,
+      `Revenue: ${values.revenue}`,
+      `Role: ${values.role}`,
+      `Largest leak: ${values.leak}`,
+      `Systems: ${values.systems.join(", ")}`,
+      `Timing: ${values.timing}`,
       "",
       values.details,
     ].join("\r\n");
@@ -268,12 +347,20 @@ form?.addEventListener("submit", async (event) => {
 
   const payload = new URLSearchParams();
   Object.entries(CONFIG.googleForm.fields).forEach(([key, entry]) => {
-    payload.append(entry, values[key] || "");
+    const value = values[key];
+    if (Array.isArray(value)) value.forEach((item) => payload.append(entry, item));
+    else payload.append(entry, value || "");
   });
 
   try {
     await fetch(CONFIG.googleForm.action, { method: "POST", mode: "no-cors", body: payload });
-    showDone();
+    track("Lead", {
+      content_name: "AI Opportunity Scan",
+      content_category: values.leak,
+      company_revenue: values.revenue,
+      lead_timing: values.timing,
+    });
+    showDone("Request received. Nikhil will review it and contact you to schedule the scan.");
   } catch (error) {
     submitButton.disabled = false;
     submitButton.textContent = "Request my free scan";
