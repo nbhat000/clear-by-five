@@ -26,9 +26,40 @@ jobs:
       - name: Inspect lead form field IDs
         run: |
           curl -fsSL 'https://docs.google.com/forms/d/e/1FAIpQLSfsUPHAPT_06n6-GDpMTpxU1anWwAY6BWjRJbsuCazyOt3WSQ/viewform?embedded=true' -o /tmp/cbf-form.html
-          echo 'ENTRY_IDS_BEGIN'
-          grep -oE 'entry\.[0-9]+' /tmp/cbf-form.html | sort -u || true
-          echo 'ENTRY_IDS_END'
+          python - <<'PY'
+          import json, re
+          html = open('/tmp/cbf-form.html', encoding='utf-8').read()
+          match = re.search(r'var FB_PUBLIC_LOAD_DATA_ = (.*?);</script>', html)
+          if not match:
+              raise SystemExit('Form data not found')
+          data = json.loads(match.group(1))
+          titles = {
+              'Full name',
+              'Work email',
+              'Mobile phone',
+              'Company',
+              'Company website',
+              'Approximate annual revenue',
+              'Your role',
+              'Where is the largest operational leak today?',
+              'Which systems run most of the business?',
+              'If the ROI is clear, when would you act?',
+              'Anything else Nikhil should know?',
+          }
+          def walk(node, path=()):
+              if isinstance(node, list):
+                  for value in node:
+                      if isinstance(value, str) and value in titles:
+                          print('FIELD_BLOCK_BEGIN', value)
+                          print(json.dumps(node, ensure_ascii=False))
+                          print('FIELD_BLOCK_END')
+                  for index, value in enumerate(node):
+                      walk(value, path + (index,))
+              elif isinstance(node, dict):
+                  for key, value in node.items():
+                      walk(value, path + (key,))
+          walk(data)
+          PY
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
