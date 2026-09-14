@@ -8,7 +8,7 @@ const CONFIG = {
 
   // Add a Google Calendar Appointment Schedule or Calendly URL here when ready.
   // Until then, every CTA scrolls to the qualified request form below.
-  bookingUrl: "",
+  bookingUrl: "https://calendar.app.google/S2CGWY6gTtXmTJig7",
 
   // Add the Meta Dataset/Pixel ID before paid traffic. The loader safely no-ops while blank.
   metaPixelId: "",
