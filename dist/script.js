@@ -103,15 +103,10 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-/* Booking buttons go straight to the calendar once a booking page is set */
+/* Keep acquisition CTAs on the qualification form. Reveal the calendar only after capture. */
 
 document.querySelectorAll("[data-cta]").forEach((link) => {
   link.addEventListener("click", () => track("Contact", { content_name: "AI Opportunity Scan" }));
-  if (CONFIG.bookingUrl) {
-    link.href = CONFIG.bookingUrl;
-    link.target = "_blank";
-    link.rel = "noopener";
-  }
 });
 
 /* Cost worksheet */
