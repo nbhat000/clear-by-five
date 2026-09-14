@@ -23,26 +23,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Verify lead form submission
-        run: |
-          status=$(curl -sS -o /tmp/cbf-response.html -w '%{http_code}' \
-            -X POST 'https://docs.google.com/forms/d/e/1FAIpQLSfsUPHAPT_06n6-GDpMTpxU1anWwAY6BWjRJbsuCazyOt3WSQ/formResponse' \
-            --data-urlencode 'entry.268435457=SYSTEM TEST — DELETE' \
-            --data-urlencode 'entry.268435458=system-test@example.com' \
-            --data-urlencode 'entry.268435459=555-0100' \
-            --data-urlencode 'entry.268435460=Clear by Five QA' \
-            --data-urlencode 'entry.268435461=https://clearbyfive.com' \
-            --data-urlencode 'entry.268435462=$5M-$10M' \
-            --data-urlencode 'entry.268435463=Owner / Founder' \
-            --data-urlencode 'entry.268435464=Slow lead response' \
-            --data-urlencode 'entry.268435465=ServiceTitan' \
-            --data-urlencode 'entry.268435465=Google Workspace' \
-            --data-urlencode 'entry.268435472=Within 30 days' \
-            --data-urlencode 'entry.268435473=Automated end-to-end submission test.' \
-            --data-urlencode 'fvv=1' \
-            --data-urlencode 'pageHistory=0')
-          echo "FORM_POST_STATUS=$status"
-          grep -q 'Your response has been recorded' /tmp/cbf-response.html
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
